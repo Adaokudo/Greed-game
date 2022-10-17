@@ -1,5 +1,3 @@
-from operator import ipow
-
 
 import os
 import random
@@ -18,34 +16,28 @@ from game.shared.point import Point
 
 
 
-FRAME_RATE = 20
+FRAME_RATE = 12
 
-MAX_X = 1000
+MAX_X = 900
 
-MAX_Y = 600 
+MAX_Y = 600
 
 CELL_SIZE = 15
 
 FONT_SIZE = 15
 
-COLS = 100
+CAPTION = 'GREED'
 
-ROWS = 80
+COLS = 60
 
-CAPTION = "Greed"
+ROWS = 40
 
-DATA_PATH = os.path.dirname(os.path.abspath(__file__)) + "/data/messages.txt"
+WHITE = Color(255, 255, 255)
 
-COLOR = Color(70, 102, 30)
-
-DEFAULT_ROCKS = 50
-
-DEFAULT_GEMS = 50
-
-def main():
+DEFAULT_ARTIFACTS = 40
 
     
-
+def main():
     
 
     cast = Cast(COLS, ROWS, CELL_SIZE)
@@ -60,7 +52,7 @@ def main():
 
     score.set_font_size(FONT_SIZE)
 
-    score.set_color(COLOR)
+    score.set_color(WHITE)
 
     score.set_position(Point(CELL_SIZE, 0))
 
@@ -84,19 +76,18 @@ def main():
 
     robot.set_font_size(FONT_SIZE)
 
-    robot.set_color(COLOR)
+    robot.set_color(WHITE)
 
     robot.set_position(position)
 
     cast.add_actor("robots", robot)
 
     
+    for n in range(DEFAULT_ARTIFACTS):  
 
-    '''The Rocks'''
+        text = random.choice(['*', 'o'])
 
-    for n in range(DEFAULT_ROCKS):        
-
-        text = str('O')
+        
 
         x = random.randint(1, COLS - 1)
 
@@ -105,7 +96,6 @@ def main():
         position = Point(x, y)
 
         position = position.scale(CELL_SIZE)
-
 
 
         r = random.randint(0, 255)
@@ -126,65 +116,13 @@ def main():
 
         artifact.set_color(color)
 
-        artifact.set_position(position)        
+        artifact.set_position(position)                    
 
-        y_speed = random.randint(3, 5)                
-
-        artifact.set_velocity(Point(0,y_speed))       
-
-                
+        artifact.set_velocity(Point(0,1))    
 
         cast.add_actor("artifacts", artifact)
 
-    
 
-    '''The gems'''
-
-    for n in range(DEFAULT_GEMS):        
-
-        text = str('*')
-
-        x = random.randint(1, COLS - 1)
-
-        y = random.randint(1, ROWS - 1)
-
-        position = Point(x, y)
-
-        position = position.scale(CELL_SIZE)
-
-
-
-        r = random.randint(0, 255)
-
-        g = random.randint(0, 255)
-
-        b = random.randint(0, 255)
-
-        color = Color(r, g, b)
-
-        
-
-        artifact = Artifact()
-
-        artifact.set_text(text)
-
-        artifact.set_font_size(FONT_SIZE)
-
-        artifact.set_color(color)
-
-        artifact.set_position(position)
-
-        y_speed = random.randint(2, 5)
-
-        artifact.set_velocity(Point(0,y_speed))
-
-                
-
-        cast.add_actor("artifacts", artifact)
-
-    
-
-    
 
     keyboard_service = KeyboardService(CELL_SIZE)
 
